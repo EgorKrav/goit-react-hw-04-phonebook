@@ -29,9 +29,12 @@ export const App = () => {
           i.number === contact.number) ||
         i.number === contact.number
     );
-    enterContacts
-      ? alert(`${name} or ${number} is already in contacts`)
-      : setContacts([contact, ...contacts]);
+
+    if (enterContacts) {
+      alert(`${name} or ${number} is already in contacts`);
+    } else {
+      setContacts(prevContacts => [contact, ...prevContacts]);
+    }
   };
 
   const changeFilterInput = e => {
@@ -45,8 +48,10 @@ export const App = () => {
   };
 
   const deleteContact = id => {
-    setContacts(contacts.filter(contact => contact.id !== id));
-    setFilter('');
+    setContacts(prevContacts =>
+      prevContacts.filter(contact => contact.id !== id)
+    );
+    setFilter(() => '');
   };
 
   return (
